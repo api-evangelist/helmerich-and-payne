@@ -1,0 +1,28 @@
+generated: '2026-09-13'
+method: generated
+source: >-
+  Authored from openapi/helmerich-and-payne-magvar-survey-validation.json. Every operationId
+  referenced was verified against the provider's own Swagger document; none is invented. No
+  provider-published Agent Skill or AGENTS.md was found on hpinc.com or magvar.com.
+provider_published_skills:
+  found: false
+  probed:
+    - url: https://www.hpinc.com/llms.txt
+      status: 200
+      note: Real llms.txt, but a marketing-site index — names no API and no skills.
+    - url: https://www.hpinc.com/resources/customer-tools
+      status: 200
+  checked: '2026-09-13'
+skills:
+  - name: validate-mwd-survey
+    file: helmerich-and-payne-validate-mwd-survey.md
+    api: MagVAR Survey Validation API
+    operations: [uncertaintyValuesUsingGET]
+    read_only: true
+    description: >-
+      Run ISCWSA OWSG Rev-2 dynamic quality control on one MWD survey station and interpret the
+      Green/Orange/Red verdicts, anti-collision sigma and uncertainty split.
+skill_count: 1
+note: >-
+  The API exposes exactly one operation, so one skill covers the entire published surface. It is
+  written against real parameter names, enums, ranges and the observed 400 envelope.

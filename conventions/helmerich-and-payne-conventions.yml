@@ -1,0 +1,95 @@
+generated: '2026-09-13'
+method: derived
+source: >-
+  openapi/helmerich-and-payne-magvar-survey-validation.json plus live response headers observed on
+  https://fac-api.magvar.com/uncertaintyValues (2026-09-13).
+scope_note: >-
+  These conventions describe the one public H&P API: the MagVAR Survey Validation API. It is a
+  single-operation, read-only, parameter-in/answer-out calculation endpoint, so several of the
+  dimensions below are genuinely not applicable rather than missing.
+auth:
+  style: none
+  detail: Anonymous. See authentication/helmerich-and-payne-authentication.yml.
+base_url: https://fac-api.magvar.com
+media_types:
+  request: none (all input is in the query string)
+  response: application/json;charset=UTF-8
+  declared_produces: '*/*'
+  note: >-
+    The contract declares `produces: ["*/*"]` — a Springfox default — while the server actually
+    returns application/json. A consumer reading the contract alone cannot tell what it will get.
+idempotency:
+  coverage: na
+  mechanism: none
+  detail: >-
+    The API exposes exactly one operation and it is a GET. There is no mutating surface, so there
+    is nothing to replay-protect. `na` here means "no writes exist", not "replay protection is
+    missing" — and no `Idempotency` pointer is emitted in apis.yml.
+  safe_to_retry: true
+  safe_to_retry_basis: >-
+    GET /uncertaintyValues is a pure function of its query parameters; identical parameters returned
+    identical results across repeat calls.
+reversibility:
+  grade: na
+  detail: >-
+    Read-only API. No operation creates, changes or destroys provider-side state, so there is
+    nothing to cancel, refund, void or restore. An agent can call this endpoint with no risk of an
+    action it cannot take back.
+  write_surfaces: []
+dry_run_mode:
+  supported: na
+  detail: Every call is already a calculation with no side effects; a dry run and a real run are the same call.
+pagination:
+  style: none
+  detail: A single scalar result object. No collections, no cursors, no page parameters.
+filtering_and_expansion:
+  supported: false
+versioning:
+  scheme: none
+  detail: >-
+    No version segment in the path (`basePath: /`), no version header, no version field in the
+    response. The contract itself carries no `info.version`. See lifecycle/.
+  spec_version: Swagger 2.0 (OpenAPI 2.0)
+request_id_tracing:
+  supported: false
+  detail: >-
+    No X-Request-Id, X-Correlation-Id or trace header is returned. The only server-side identifier
+    in the response headers is `x-application-context: application:8075`.
+error_envelope:
+  shape: custom
+  format: not-rfc9457
+  detail: >-
+    400 returns `{"validationErrors":[{"field":..., "message":..., "value":...}]}` — a field-level
+    validation list, not an RFC 9457 problem+json document. 500 returns no documented schema.
+    See errors/helmerich-and-payne-problem-types.yml.
+rate_limit_signaling:
+  headers: []
+  detail: >-
+    No X-RateLimit-*, RateLimit-*, or Retry-After header was observed on a 200. See
+    rate-limits/helmerich-and-payne-rate-limits.yml.
+units_and_enums:
+  note: >-
+    The strongest convention this API actually has is explicit unit selection. Every physical
+    quantity is paired with a required units enum — depthUnits (METER/KILOMETER/FOOT/FOOT_US/YARD/
+    MILE/SE_FT), bTotalUnits (NANOTESLA/MICROTESLA/MILLITESLA/TESLA/GAUSS/GAMMA), gTotalUnits
+    (M_PER_SEC_SQ/FT_PER_SEC_SQ/G/MILLI_G/G_98/GAL/MILLI_GAL) — and gravityModel and toolCode are
+    closed enums too. There are no implicit units anywhere in the contract, which for a wellbore
+    survey calculation is the difference between a correct answer and a dangerous one.
+  ranges_documented: true
+  ranges_note: >-
+    Every numeric parameter documents its valid range in its description (latitude -90 to 90,
+    longitude -180 to 360, measuredBTotal 0 to 80000, depthBelowMSL -20000 to 60000, and so on),
+    and every parameter carries a worked default value. A caller can construct a valid request
+    from the contract alone.
+transport_security:
+  tls: enforced
+  hsts: 'max-age=31622400; includeSubDomains; preload'
+  csp: present
+  other_headers: [x-content-type-options=nosniff, x-frame-options=SAMEORIGIN]
+  observed: '2026-09-13'
+cross_links:
+  errors: errors/helmerich-and-payne-problem-types.yml
+  lifecycle: lifecycle/helmerich-and-payne-lifecycle.yml
+  authentication: authentication/helmerich-and-payne-authentication.yml
+  rate_limits: rate-limits/helmerich-and-payne-rate-limits.yml
+  data_model: data-model/helmerich-and-payne-data-model.yml

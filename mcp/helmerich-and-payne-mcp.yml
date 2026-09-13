@@ -1,0 +1,59 @@
+generated: '2026-09-13'
+method: derived
+status: candidate
+source: >-
+  Derived from openapi/helmerich-and-payne-magvar-survey-validation.json. No MCP server is published
+  by Helmerich & Payne or MagVAR — this is a candidate tool list, not a server.
+name: helmerich-and-payne-magvar-survey-validation
+title: MagVAR Survey Validation (candidate MCP tools)
+description: >-
+  A candidate MCP tool projection of the one public H&P API. NOTHING HERE IS SHIPPED BY THE
+  PROVIDER. It records what an MCP server over this API would expose if one existed, so the gap is
+  visible rather than silent.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: searched
+  note: >-
+    Searched for a hosted remote MCP endpoint and for a published stdio package on npm, PyPI and
+    the H&P/MagVAR GitHub organizations (both empty). Nothing exists. `mode: none` means we derived
+    a candidate and nobody ships a server — no endpoint URL has been invented, and no `MCPServer`
+    pointer is emitted in apis.yml (the pointer is `X-MCPServerCandidate`).
+search_evidence:
+  - what: hosted remote MCP endpoint
+    probed:
+      - url: https://fac-api.magvar.com/.well-known/oauth-protected-resource
+        status: 404
+      - url: https://www.hpinc.com/.well-known/ai-plugin.json
+        status: 404
+    result: none found
+  - what: stdio package
+    probed: [registry.npmjs.org search, pypi.org, github.com/helmerichpayne, github.com/MagVAR]
+    result: none found
+tools:
+  - name: validate_mwd_survey
+    status: candidate
+    description: >-
+      Run ISCWSA OWSG Rev-2 dynamic quality control on a single MWD survey station: compare measured
+      Btotal, dip and Gtotal against their references and return a Green/Orange/Red verdict per
+      field, an anti-collision sigma distance with a pass/fail flag, and the random and systematic
+      components of inclination and azimuth uncertainty.
+    backing_rest_operation: uncertaintyValuesUsingGET
+    method: GET
+    path: /uncertaintyValues
+    input_schema_source: >-
+      Inherits the 19 required query parameters of uncertaintyValuesUsingGET verbatim — the real
+      inputSchema is in the OpenAPI, including every unit enum, range and default. It is NOT
+      restated here, so it cannot drift from the contract.
+    output_schema: '#/definitions/SurveyValidation'
+    read_only: true
+    destructive: false
+tool_count: 1
+gap_note: >-
+  This API is a strong MCP candidate and a weak one at the same time. Strong: a single stateless,
+  anonymous, side-effect-free calculation with fully enumerated inputs is close to the ideal shape
+  for an agent tool. Weak: one tool is a thin server, and the EULA that governs the API is not
+  something an agent can accept on a user's behalf.

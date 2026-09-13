@@ -1,0 +1,40 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://www.hpinc.com/resources/customer-tools, https://www.magvar.com/EULA_SurveyValidationAPI.html,
+  https://www.hpinc.com/technologies/survey-management, https://www.hpinc.com/contact
+plan_count: 0
+plans: []
+pricing_published: false
+pricing_url: null
+note: >-
+  H&P publishes no pricing page, no plan tiers and no rate card for the MagVAR Survey Validation
+  API or for any other surface. The commercial motion is enterprise contract drilling and
+  technology services sold through a sales conversation (https://www.hpinc.com/contact), with the
+  API's commercial terms set by the Survey Validation API EULA rather than by a published plan.
+  This is plan_count 0 with a reason, not an unchecked field.
+licence_model:
+  document: https://www.magvar.com/EULA_SurveyValidationAPI.html
+  status: 200
+  tiers_named_in_eula:
+    - name: paid licence
+      note: >-
+        "Paid licenses include all product upgrades for the licensed software modules for the
+        entire validity of the license agreement period." No price is stated anywhere.
+    - name: free licence
+      note: >-
+        "Free licenses include all product upgrades that rectify software malfunction or
+        deficiencies. However, free licenses may not provide access to certain product upgrades
+        that introduce enhanced functionality."
+  term: one year, single user, single computer, non-exclusive
+  checked: '2026-09-13'
+  caveat: >-
+    These are licence classes named in a legal document, NOT published plans — there is no price,
+    no quota, no overage and no way to buy either one online. They are recorded here because they
+    are the only tiering H&P puts in writing, and a reader should not mistake the absence of a
+    pricing page for the absence of a commercial model.
+access_reality:
+  note: >-
+    The endpoint itself is anonymous and free to call today (verified 200 on 2026-09-13 with no
+    credential). The gap between "technically open" and "contractually licensed" is the single most
+    important commercial fact about this API.

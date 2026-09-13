@@ -1,0 +1,53 @@
+generated: '2026-09-13'
+method: probed
+source: >-
+  openapi/helmerich-and-payne-magvar-survey-validation.json (harvested from
+  https://fac-api.magvar.com/v2/api-docs) plus a live unauthenticated call to
+  https://fac-api.magvar.com/uncertaintyValues on 2026-09-13.
+summary: >-
+  There is no authentication. The MagVAR Survey Validation API declares no `securityDefinitions`
+  and no `security` block anywhere in its Swagger 2.0 contract, and a fully anonymous GET with the
+  spec's own default parameter values returned HTTP 200 with a complete result body. This is not an
+  undocumented-auth gap — it is an open, keyless, read-only public endpoint.
+schemes: []
+security_applied: false
+anonymous_access:
+  verified: true
+  method: probed
+  probe:
+    url: https://fac-api.magvar.com/uncertaintyValues
+    request: GET with the 19 required query parameters at their spec-declared defaults
+    status: 200
+    content_type: application/json;charset=UTF-8
+    checked: '2026-09-13'
+  note: >-
+    Returned a real computed result (sigmaValidation.distance 0.9495, three Green validation
+    results, inclination/azimuth uncertainties). No API key, header, cookie or token was sent.
+license_gate:
+  documented: true
+  url: https://www.magvar.com/EULA_SurveyValidationAPI.html
+  status: 200
+  note: >-
+    Access is technically open but legally licensed. The Survey Validation API EULA grants a
+    non-exclusive one-year single-user single-computer licence and explicitly contemplates both
+    paid and free licences; it prohibits redistribution, sublicensing and derivative works. There
+    is no technical enforcement point on the endpoint — the licence is the only gate. An agent
+    calling this API is inside a EULA it was never asked to accept, which is the honest risk to
+    record here.
+account_surfaces:
+  - name: MagVAR / H&P customer login
+    url: https://www.hpinc.com/customer-login
+    status: 200
+    note: >-
+      The customer login fronts Saphira (saphira.magvar.com) and the MagVAR account area. It is NOT
+      the gate for the Survey Validation API, which is anonymous.
+docs:
+  - url: https://fac-api.magvar.com/swagger-ui.html
+    status: 200
+    note: Springfox Swagger UI 2.9.2; the only published API reference. It documents no auth step.
+gaps:
+  - No securitySchemes / securityDefinitions in the contract.
+  - No rate limiting, quota, or attribution mechanism is visible on an anonymous call, so the
+    provider has no way to tie usage to the EULA it publishes.
+  - No OAuth, OIDC or key-issuance surface exists on any H&P or MagVAR host (see
+    well-known/helmerich-and-payne-well-known.yml — all discovery paths 404).

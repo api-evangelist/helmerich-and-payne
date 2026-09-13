@@ -1,0 +1,121 @@
+generated: '2026-09-13'
+method: derived
+source: >-
+  openapi/helmerich-and-payne-magvar-survey-validation.json (harvested from
+  https://fac-api.magvar.com/v2/api-docs), live response headers from fac-api.magvar.com, the
+  /.well-known/ sweep in well-known/helmerich-and-payne-well-known.yml, and
+  https://www.hpinc.com/technologies/survey-management.
+summary: >-
+  One genuine, contract-level domain-standard conformance — ISCWSA/OWSG Rev 2 — and very little
+  else. The API is a Swagger 2.0 document with no auth, no problem+json, no discovery documents and
+  no event surface. The domain standard is the whole story here and it is a strong one: the tool
+  codes are IN the contract as a closed enum, not asserted on a marketing page.
+standards:
+  # ---- DOMAIN STANDARD (0.12.0 domain_standard_conformance) ----
+  - id: iscwsa-owsg-error-model-rev2
+    name: ISCWSA / OWSG Wellbore Survey Error Model, Rev 2
+    body: SPE Wellbore Positioning Technical Section (Industry Steering Committee on Wellbore Survey Accuracy) / Operators Wellbore Survey Group
+    conforms: true
+    domain_standard: true
+    evidence: >-
+      Declared inside the contract itself, twice. (1) info.description: "This web API implements
+      dynamic quality control for the ISCWSA OWSG Rev-2 error model tool codes." (2) The required
+      `toolCode` query parameter on GET /uncertaintyValues is a closed 22-value enum of ISCWSA Rev 2
+      and extended tool codes — MWD, MWD_AX, MWD_AX_SAG, MWD_HRGM, MWD_HRGM_AX, MWD_HRGM_AX_SAG,
+      MWD_HRGM_SAG, MWD_HRGM_SAG_MS, MWD_IFR1, MWD_IFR1_AX, MWD_IFR1_AX_SAG, MWD_IFR1_MS,
+      MWD_IFR1_SAG, MWD_IFR1_SAG_MS, MWD_IFR2_AX_SAG, MWD_IFR2_SAG, MWD_IFR2_SAG_MS, MWD_IGRF,
+      MWD_IGRF_AX, MWD_IGRF_AX_SAG, MWD_IGRF_SAG, MWD_SAG — with the parameter description "Tool
+      code chosen from the ISCWSA Rev2 standard and extended sets".
+    evidence_location: 'openapi/helmerich-and-payne-magvar-survey-validation.json#/paths/~1uncertaintyValues/get/parameters (name=toolCode) and #/info/description'
+    buyer_impact: >-
+      A directional-drilling or wellbore-placement shop that already speaks ISCWSA Rev 2 integrates
+      against this endpoint with no bespoke mapping: the tool code it already uses in its survey
+      program is the literal enum value this API expects, and the random/systematic uncertainty
+      split it returns is the standard's own decomposition.
+  - id: iscwsa-gravity-reference-models
+    conforms: true
+    domain_standard: true
+    evidence: >-
+      The `gravityModel` parameter is a closed enum (OLD_STYLE, STANDARD_TOTALG, GARM_TOTALG)
+      naming the industry reference-gravity models used in survey QC, defaulting to GARM_TOTALG.
+    evidence_location: 'openapi/helmerich-and-payne-magvar-survey-validation.json#/paths/~1uncertaintyValues/get/parameters (name=gravityModel)'
+  - id: wgs84
+    conforms: true
+    evidence: >-
+      Location is specified explicitly in WGS84 — the latitude and longitude parameter descriptions
+      read "WGS84 Latitude" and "WGS84 Longitude", with ranges stated. The datum is named in the
+      contract rather than left implicit, which is unusual and correct for a geodetic calculation.
+  - id: iso-8601-datetime
+    conforms: true
+    evidence: '`surveyDate` is declared type string / format date-time with the worked default 2017-10-12T11:00:00.000-0600.'
+  # ---- CROSS-CUTTING / TRANSPORT ----
+  - id: swagger-2.0
+    conforms: true
+    evidence: >-
+      Provider serves a valid Swagger 2.0 document at https://fac-api.magvar.com/v2/api-docs (200,
+      8,019 bytes, 1 path / 1 operation / 6 definitions), discoverable from
+      https://fac-api.magvar.com/swagger-resources. Captured 2026-09-13 to
+      openapi/_original/helmerich-and-payne-magvar-survey-validation-swagger.json.
+  - id: openapi-3
+    conforms: false
+    evidence: >-
+      No OpenAPI 3.x document is published. /v3/api-docs returns 404 (Springfox 2.9.2 serves 2.0
+      only). The contract is a decade-old spec generation behind.
+  - id: https-tls
+    conforms: true
+    evidence: HTTP/2 over TLS enforced on fac-api.magvar.com; plain HTTP is not offered.
+  - id: hsts
+    conforms: true
+    evidence: 'strict-transport-security: max-age=31622400; includeSubDomains; preload observed 2026-09-13.'
+  - id: content-security-policy
+    conforms: true
+    evidence: A restrictive default-src 'self' CSP with object-src 'none' is returned on API responses.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      400s return a bespoke {"validationErrors":[...]} envelope as application/json. No
+      application/problem+json media type appears anywhere in the contract. See
+      errors/helmerich-and-payne-problem-types.yml.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on hpinc.com, hpinc.com apex, helmerichpayne.com, fac-api.magvar.com and tools.magvar.com.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Deprecation or Sunset header observed; no deprecation policy published; no operation in the spec is marked deprecated.
+  - id: oauth2
+    conforms: false
+    evidence: No securityDefinitions in the contract and no /.well-known/oauth-authorization-server on any host (all 404).
+  - id: oidc-discovery
+    conforms: false
+    evidence: /.well-known/openid-configuration 404 on every probed host.
+  - id: mcp
+    conforms: false
+    evidence: No hosted or local Model Context Protocol server is published by H&P or MagVAR.
+  - id: a2a-agent-card
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json miss on all eight probed hosts —
+      404 on the H&P hosts, HTML SPA shells on fac.magvar.com and saphira.magvar.com.
+  - id: asyncapi
+    conforms: false
+    evidence: No event, streaming or webhook surface is published. N/A rather than a failure — this is a synchronous calculation API.
+  - id: llms-txt
+    conforms: true
+    evidence: https://www.hpinc.com/llms.txt returns a real 4,320-byte text/plain llms.txt (Yoast SEO v28.1). Saved verbatim to llms/helmerich-and-payne-llms.txt.
+# ---- UPSTREAM O&G DATA STANDARDS CHECKED AND NOT FOUND ----
+# Recorded so a later round does not re-litigate them. Reward-only: absence is not a penalty.
+probed_not_found:
+  - id: witsml
+    note: No WITSML (Energistics) surface published on any H&P or MagVAR host.
+  - id: osdu
+    note: No OSDU Data Platform API or OSDU schema reference found.
+  - id: ppdm
+    note: No PPDM data-model reference found.
+  - id: energistics-etp
+    note: No Energistics Transfer Protocol endpoint found.
+compliance_certifications:
+  published: false
+  checked: '2026-09-13'
+  note: >-
+    No SOC 2, ISO 27001, PCI, HIPAA or FedRAMP claim is published on hpinc.com or magvar.com, and no
+    trust center exists. NO `Compliance` pointer is emitted — there is nothing to point at.

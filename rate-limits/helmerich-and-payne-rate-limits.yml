@@ -1,0 +1,32 @@
+generated: '2026-09-13'
+method: probed
+source: >-
+  https://fac-api.magvar.com/swagger-ui.html, https://www.hpinc.com/resources/customer-tools,
+  https://www.magvar.com/EULA_SurveyValidationAPI.html, and live response headers observed on
+  https://fac-api.magvar.com/uncertaintyValues (2026-09-13).
+limit_count: 0
+rate_limits: []
+headers: []
+exhaustion_status_code: null
+note: >-
+  No rate limit is published and none is signalled at runtime. A live 200 response carried no
+  X-RateLimit-*, no RateLimit-*, no Retry-After and no quota header of any kind — the only headers
+  returned are x-application-context, content-type, cache-control, HSTS, CSP, x-content-type-options,
+  x-frame-options and server. The docs publish no limit, and the EULA governs licensing rather than
+  request volume. This is an honest zero, not an unchecked field: an agent calling this API has no
+  runtime signal to back off on, which is a real gap for an endpoint that is anonymous and
+  therefore un-attributable.
+probed:
+  - url: https://fac-api.magvar.com/uncertaintyValues
+    status: 200
+    rate_limit_headers_present: false
+    observed_headers: [x-application-context, content-type, content-length, date, x-envoy-upstream-service-time, cache-control, content-security-policy, strict-transport-security, x-content-type-options, x-frame-options, server]
+    checked: '2026-09-13'
+  - url: https://fac-api.magvar.com/swagger-ui.html
+    status: 200
+    note: API reference documents no limits.
+    checked: '2026-09-13'
+infrastructure_note: >-
+  Responses carry `x-envoy-upstream-service-time`, so the API sits behind an Envoy proxy that could
+  enforce limits without advertising them. Nothing observed suggests a limit was applied during
+  this pass.

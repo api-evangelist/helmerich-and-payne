@@ -1,0 +1,63 @@
+generated: '2026-09-13'
+method: probed
+source: >-
+  openapi/helmerich-and-payne-magvar-survey-validation.json (responses + ValidationErrors schema)
+  confirmed against live 400 responses from https://fac-api.magvar.com/uncertaintyValues on
+  2026-09-13.
+format: custom
+format_note: >-
+  NOT RFC 9457. The API returns application/json with a bespoke `validationErrors` array — no
+  `type`, `title`, `status`, `detail` or `instance` member, and no application/problem+json media
+  type anywhere in the contract. There is no error code vocabulary either: the machine-stable part
+  of an error is the `field` name, and the human part is a free-text `message`.
+envelope:
+  media_type: application/json;charset=UTF-8
+  schema: '#/definitions/ValidationErrors'
+  shape: '{"validationErrors": [{"field": string, "message": string, "value": any}]}'
+  fields:
+    - name: field
+      description: The request parameter that failed. The only machine-stable discriminator in the envelope.
+      stable: true
+    - name: message
+      description: Human-readable reason. Free text, not an enumerated code.
+      stable: false
+    - name: value
+      description: The offending value echoed back, as a string.
+      stable: true
+problem_types:
+  - status: 400
+    title: Unexpected or invalid data in request
+    declared_in_spec: true
+    schema: ValidationErrors
+    observed: true
+    remediation: >-
+      Correct the named parameter and retry. Every numeric parameter publishes its valid range in
+      its own description in the contract, so a 400 of this class is fully preventable client-side.
+    observed_examples:
+      - trigger: latitude=99999 (outside the documented -90..90 range)
+        url: https://fac-api.magvar.com/uncertaintyValues?...&latitude=99999&...
+        status: 400
+        body: '{"validationErrors":[{"field":"latitude","message":"Must be between -90 and 90 degrees","value":"99999.0"}]}'
+        checked: '2026-09-13'
+      - trigger: request with no query parameters at all
+        url: https://fac-api.magvar.com/uncertaintyValues
+        status: 400
+        body: '{"validationErrors":[{"field":"surveyDate","message":"Required field is missing","value":""}]}'
+        checked: '2026-09-13'
+        note: >-
+          Only the FIRST missing field is reported, not all nineteen. An agent repairing a request
+          from scratch will take nineteen round trips rather than one.
+  - status: 500
+    title: Internal server error
+    declared_in_spec: true
+    schema: null
+    observed: false
+    remediation: >-
+      Retry is safe (the operation is a side-effect-free GET). No schema is declared for this
+      response, so a client cannot parse a 500 body from the contract.
+    gap: 500 is declared with no response schema.
+gaps:
+  - No error code registry — errors are discriminated only by parameter name and free text.
+  - No 401/403/404/429 responses are declared or reachable; the API is anonymous and unmetered.
+  - Validation stops at the first failing field, so batched repair is impossible.
+  - Not RFC 9457, so generic problem-details tooling cannot read these errors.

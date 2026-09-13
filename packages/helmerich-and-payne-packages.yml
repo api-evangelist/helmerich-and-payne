@@ -1,0 +1,101 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  Registry sweeps of npm (registry.npmjs.org search + package metadata), PyPI, RubyGems, crates.io,
+  NuGet, Maven Central and pkg.go.dev for a first-party Helmerich & Payne / MagVAR client library,
+  plus the GitHub organizations github.com/helmerichpayne and github.com/MagVAR and the provider's
+  own customer-tools page (https://www.hpinc.com/resources/customer-tools).
+summary:
+  first_party_sdk_count: 0
+  third_party_package_count: 2
+  note: >-
+    H&P publishes NO client library in any public package registry. The documented integration story
+    for the one public API — the MagVAR Survey Validation API — is a raw HTTPS GET with query
+    parameters; the provider's own words are "programmatic access by user software", with no SDK
+    offered. Because no official SDK exists, this repo emits NO `SDKs` pointer in apis.yml and no
+    `Packages` pointer either: the sdk_count check must read a genuine zero here.
+
+github_organizations:
+  - login: helmerichpayne
+    url: https://github.com/helmerichpayne
+    name: 'H&P'
+    blog: https://www.helmerichpayne.com/
+    created: '2022-11-02'
+    public_repos: 0
+    official: true
+    checked: '2026-09-13'
+    note: >-
+      Confirmed first-party (org display name "H&P", website helmerichpayne.com). It is an empty
+      shell — zero public repositories since creation in 2022. A `GitHubOrganization` pointer IS
+      emitted because the org is real and publicly reachable, but nothing is published in it.
+  - login: MagVAR
+    url: https://github.com/MagVAR
+    public_repos: 0
+    official: unknown
+    checked: '2026-09-13'
+    note: >-
+      Org slug exists with no name, no website, no description and zero public repositories, so
+      ownership cannot be established. NOT wired as a pointer.
+
+# OWNERSHIP WARNING — do not "repair" this file by marking either package below official:true.
+# Both are third-party magnetic-declination libraries that merely share the MagVAR name, and
+# neither has any relationship to Magnetic Variation Services LLC / Helmerich & Payne.
+packages: []
+
+third_party_packages:
+  - language: javascript
+    registry: npm
+    name: magvar
+    url: https://www.npmjs.com/package/magvar
+    install: npm install magvar
+    official: false
+    version: 2.2.0
+    published: '2026-08-14'
+    author: Darren Yeates <apps@sensorworks.co.uk>
+    repository: https://github.com/dpyeates/magvar
+    description: >-
+      Calculates magnetic variation at a specified location from the World Magnetic Model 2025-2030.
+      An unrelated open-source library that happens to hold the `magvar` npm name. Recorded here so
+      a future round does not mistake it for an H&P client library.
+    source: https://registry.npmjs.org/magvar
+  - language: python
+    registry: pypi
+    name: magvar
+    url: https://pypi.org/project/magvar/
+    install: pip install magvar
+    official: false
+    version: '1.1'
+    published: null
+    published_note: >-
+      PyPI metadata for this project carries no release date in info; not re-derived from the
+      releases array. Checked, nothing to record.
+    author: Terence Way
+    homepage: https://www.wayforward.net/magvar/
+    description: >-
+      Magnetic variation (declination) for aviation navigation. Unrelated to Helmerich & Payne.
+    source: https://pypi.org/pypi/magvar/json
+
+registries_checked:
+  - registry: npm
+    query: 'magvar, helmerich-payne, hpinc'
+    first_party_hits: 0
+    checked: '2026-09-13'
+  - registry: pypi
+    query: magvar
+    first_party_hits: 0
+    checked: '2026-09-13'
+  - registry: rubygems
+    first_party_hits: 0
+    checked: '2026-09-13'
+  - registry: crates.io
+    first_party_hits: 0
+    checked: '2026-09-13'
+  - registry: nuget
+    first_party_hits: 0
+    checked: '2026-09-13'
+  - registry: maven-central
+    first_party_hits: 0
+    checked: '2026-09-13'
+  - registry: pkg.go.dev
+    first_party_hits: 0
+    checked: '2026-09-13'

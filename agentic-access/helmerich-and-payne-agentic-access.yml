@@ -1,0 +1,53 @@
+generated: '2026-09-13'
+method: generated
+source: openapi/helmerich-and-payne-magvar-survey-validation.json
+description: >-
+  Recommended x-agentic-access execution contract for the one public H&P API, classified from the
+  OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment.
+summary:
+  operations: 1
+  by_action_class:
+    connected: 1
+  by_consequence:
+    read: 1
+  human_in_the_loop_required: 0
+operations:
+  - path: /uncertaintyValues
+    method: get
+    operationId: uncertaintyValuesUsingGET
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: not-required
+      audience: null
+      token:
+        max-ttl: null
+        note: >-
+          No token exists. The endpoint is anonymous — there is no credential to scope, rotate or
+          time-box, which also means there is no way to revoke an agent's access short of blocking
+          it at the network layer.
+      escalation:
+        human-in-the-loop: conditional
+        triggers:
+          - eula-acceptance
+          - high-volume
+        note: >-
+          Not a consequence trigger — the call itself is harmless. The escalation exists because
+          use is governed by a EULA the agent cannot accept on the user's behalf, and because the
+          API publishes no rate limit, so sustained agent traffic is unbounded and unattributable.
+      audit: recommended
+      decision-weight: high
+      decision-weight-note: >-
+        The call has no side effects, but its OUTPUT feeds a wellbore-placement decision. An agent
+        must present the Green/Orange/Red verdict with its thresholds and the random/systematic
+        uncertainty split intact, not a summarised "looks fine".
+posture:
+  read_only_surface: true
+  writes_possible: false
+  reversibility: na
+  idempotency: na
+  note: >-
+    This is about as safe a surface as an agent can be given: one stateless, anonymous,
+    side-effect-free GET with fully enumerated inputs and documented ranges. The residual risks are
+    legal (an unaccepted EULA) and interpretive (misreporting a QC verdict), not operational.

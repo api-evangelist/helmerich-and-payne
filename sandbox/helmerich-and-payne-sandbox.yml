@@ -1,0 +1,64 @@
+generated: '2026-09-13'
+method: probed
+source: >-
+  https://fac-api.magvar.com/swagger-ui.html, https://fac.magvar.com/,
+  https://tools.magvar.com/mvrs/#/main, https://www.hpinc.com/resources/customer-tools
+summary: >-
+  There is no sandbox in the test-environment sense — no test mode, no test credentials, no fixture
+  data, no separate host. What H&P does publish is an interactive console and two free browser
+  calculators that hit the SAME production calculation the API exposes. Because the API is
+  anonymous, read-only and side-effect-free, the production endpoint IS effectively the try-it
+  surface, which is why a console is meaningful here where a test mode would be meaningless.
+test_mode:
+  exists: false
+  key_prefixes: []
+  note: No test-vs-live distinction exists; there are no keys at all.
+test_data:
+  published: true
+  form: spec-embedded worked defaults
+  note: >-
+    Every one of the 19 required parameters carries a real worked default value in the contract —
+    latitude 29.4217, longitude -98.4838, depthBelowMSL -200, measuredBTotal 46475.6, measuredDip
+    57.96, measuredGTotal 9.803, referenceBTotal 46644.9, referenceDip 58.04, referenceGTotal 9.8,
+    referenceDeclination 4.24, surveyDate 2017-10-12T11:00:00.000-0600, toolCode MWD, wellbore
+    inclination/azimuth 45/45, antiCollisionSigma 2.0. A caller can execute a complete, valid,
+    meaningful request straight from the spec without inventing a single value. These are the
+    provider's own published values, captured verbatim — not invented here.
+  verified_call:
+    url: https://fac-api.magvar.com/uncertaintyValues
+    parameters: the spec defaults above
+    status: 200
+    result_summary: 'sigmaValidation.distance 0.9495 (withinTolerance true); Btotal/dip/Gtotal all Green'
+    checked: '2026-09-13'
+consoles:
+  - name: Swagger UI (MagVAR API Documentation)
+    url: https://fac-api.magvar.com/swagger-ui.html
+    status: 200
+    kind: interactive-api-console
+    implementation: Springfox Swagger UI 2.9.2
+    auth_required: false
+    note: >-
+      Try-it-out executes against the production endpoint. This is the only API reference the
+      provider publishes.
+  - name: MagVAR Dynamic Quality Control Web Calculator
+    url: https://fac.magvar.com/
+    status: 200
+    kind: hosted-calculator
+    auth_required: false
+    note: >-
+      Angular front end for the same QC calculation. The API's own info.description points at it:
+      "Please also see https://fac.magvar.com for a user friendly front end calculator."
+    reference_doc: https://tools.magvar.com/doc/MagVAR%20Dynamic%20QC%20web%20calculator.pdf
+    reference_doc_status: 200
+  - name: MagVAR Recovery Simulator (MVRS)
+    url: https://tools.magvar.com/mvrs/#/main
+    status: 200
+    kind: hosted-simulator
+    auth_required: false
+    note: >-
+      Survey recovery scenario simulator. Browser-only; no API of its own was found (no spec
+      document, no XHR contract published).
+gaps:
+  - No test environment, test tenant or seeded fixture data.
+  - No time simulation or trigger tooling (not applicable to a stateless calculation).
+  - The console executes real production calls under the Survey Validation API EULA.

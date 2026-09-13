@@ -1,0 +1,84 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://fac-api.magvar.com/v2/api-docs, https://fac-api.magvar.com/swagger-ui.html,
+  https://www.hpinc.com/resources/customer-tools, https://www.magvar.com/EULA_SurveyValidationAPI.html
+versioning:
+  scheme: none
+  detail: >-
+    No version identifier exists anywhere in the public contract. `basePath` is "/", the single
+    operation is served at /uncertaintyValues with no version segment, no version header is
+    returned, and the Swagger document carries no `info.version` field at all. The only "v2" on the
+    host is /v2/api-docs — the Springfox spec-document path, not an API version. A consumer has no
+    way to pin a version or to detect that the contract changed.
+  spec_document: https://fac-api.magvar.com/v2/api-docs
+  spec_format: Swagger 2.0 (served by Springfox 2.9.2)
+changelog:
+  published: false
+  url: null
+  probed:
+    - url: https://www.hpinc.com/resources/customer-tools
+      status: 200
+      note: Links the API and its calculators; carries no release notes or dated entries.
+    - url: https://fac-api.magvar.com/swagger-ui.html
+      status: 200
+      note: Springfox UI only; no version or change history rendered.
+  note: >-
+    No dated API changelog or release-notes page was located on hpinc.com, magvar.com or the API
+    host. NO `ChangeLog` pointer is emitted, and no changelog/ artifact is written — there is
+    nothing to structure.
+status_page:
+  published: false
+  probed:
+    - url: https://www.hpinc.com/resources/customer-tools
+      status: 200
+      note: No status or uptime link.
+  note: >-
+    No status.* host, uptime page or incident history exists for the API or for the MagVAR
+    customer tools. NO `StatusPage` pointer is emitted.
+deprecation:
+  policy_documented: false
+  deprecated_operations: []
+  sunset_headers_observed: false
+  note: >-
+    The single operation carries `deprecated: false` in the contract; no RFC 8594 Deprecation or
+    Sunset header appeared on any live response. No deprecation or retirement policy is published.
+    NO `Deprecation` pointer is emitted.
+terms:
+  url: https://www.magvar.com/EULA_SurveyValidationAPI.html
+  status: 200
+  name: Survey Validation API End User License Agreement
+  licensor: Magnetic Variation Services LLC
+  term: one year, single user, single computer, non-exclusive
+  checked: '2026-09-13'
+  key_clauses:
+    - Paid licences include all product upgrades for the licensed modules for the licence period.
+    - Free licences include only upgrades that fix malfunctions or deficiencies, and may be withheld from upgrades that add functionality.
+    - No redistribution, sublicensing, renting, leasing or transfer without written consent.
+    - No reverse engineering, decompilation, modification or derivative works.
+  note: >-
+    This is the closest thing the API has to a lifecycle commitment, and it is a licence term, not
+    an availability term: it promises upgrades to licensees, not uptime or notice before change.
+sla:
+  documented: false
+  note: No availability target, support response time, or credit scheme is published for the API.
+roadmap:
+  published: false
+  probed:
+    - url: https://www.hpinc.com/resources/customer-tools
+      status: 200
+support:
+  channel: email
+  contact: support@magvar.com
+  source: 'openapi contract info.contact.email'
+  vendor_page: https://www.magvar.com/contact
+  vendor_page_status: 200
+  checked: '2026-09-13'
+observed_state:
+  api_live: true
+  last_verified: '2026-09-13'
+  evidence: GET /uncertaintyValues returned HTTP 200 with a complete computed result on 2026-09-13.
+  note: >-
+    The API is demonstrably in service. What it lacks is every signal that would let a consumer
+    depend on it deliberately — no version, no changelog, no status page, no deprecation policy,
+    no SLA. It could change shape tomorrow and no published surface would say so.

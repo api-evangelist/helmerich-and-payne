@@ -1,0 +1,73 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — MagVAR Survey Validation API
+  version: 1.0.0
+extends: ../openapi/helmerich-and-payne-magvar-survey-validation.json
+x-provenance:
+  generated: '2026-09-13'
+  method: generated
+  source: >-
+    Derived from the provider's own Swagger 2.0 document (https://fac-api.magvar.com/v2/api-docs)
+    and from behaviour observed on live calls to https://fac-api.magvar.com/uncertaintyValues on
+    2026-09-13. Every value asserted below was either read from the contract or observed on the
+    wire; nothing is invented. The original spec is never mutated.
+actions:
+  - target: $.info
+    description: >-
+      Record the contract's missing version identifier. The provider publishes no info.version, so
+      a consumer cannot pin or diff. This adds our observation as an extension, not a fabricated
+      version number.
+    update:
+      x-version-declared: false
+      x-observed-date: '2026-09-13'
+      x-owner: Helmerich & Payne, Inc. (Magnetic Variation Services LLC, a wholly owned subsidiary)
+      x-owner-evidence: >-
+        Published by H&P on its own customer-tools page,
+        https://www.hpinc.com/resources/customer-tools; info.contact names Magnetic Variation
+        Services LLC, which H&P acquired in 2018 and now serves from www.magvar.com under H&P
+        branding.
+  - target: $.info
+    description: Record the real response media type, which the contract understates as */*.
+    update:
+      x-observed-response-media-type: application/json;charset=UTF-8
+  - target: $.paths['/uncertaintyValues'].get
+    description: >-
+      Annotate the single operation with agent-relevant runtime semantics observed on the wire:
+      it is safe, anonymous, unmetered and side-effect free.
+    update:
+      x-safe: true
+      x-idempotent: true
+      x-side-effects: none
+      x-auth-required: false
+      x-auth-observed: 'HTTP 200 on a fully anonymous request, 2026-09-13'
+      x-reversibility: na
+      x-rate-limit-headers: none observed
+      x-domain-standard: ISCWSA / OWSG wellbore survey error model, Rev 2
+  - target: $.paths['/uncertaintyValues'].get.responses['400']
+    description: >-
+      Record the real 400 body shape observed on the wire, and the observed behaviour that only the
+      first failing field is reported.
+    update:
+      x-observed-example: '{"validationErrors":[{"field":"latitude","message":"Must be between -90 and 90 degrees","value":"99999.0"}]}'
+      x-observed-behaviour: >-
+        Validation short-circuits on the first failing parameter; a request missing all parameters
+        reports only surveyDate.
+      x-problem-details: false
+  - target: $.paths['/uncertaintyValues'].get.responses['500']
+    description: The contract declares a 500 with no schema. Flag the gap rather than invent one.
+    update:
+      x-schema-missing: true
+  - target: $
+    description: >-
+      Point at the derived artifacts in this repository so a consumer of the spec can find the
+      error catalog, auth profile, conventions and data model we derived from it.
+    update:
+      x-api-evangelist-artifacts:
+        authentication: authentication/helmerich-and-payne-authentication.yml
+        conventions: conventions/helmerich-and-payne-conventions.yml
+        errors: errors/helmerich-and-payne-problem-types.yml
+        data_model: data-model/helmerich-and-payne-data-model.yml
+        conformance: conformance/helmerich-and-payne-conformance.yml
+        lifecycle: lifecycle/helmerich-and-payne-lifecycle.yml
+        sandbox: sandbox/helmerich-and-payne-sandbox.yml
+        skills: skills/_index.yml

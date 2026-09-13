@@ -1,0 +1,182 @@
+generated: '2026-09-13'
+method: probed
+source: live probes of /.well-known/ on every H&P and MagVAR host known to this record
+summary: >-
+  NOTHING is served. Forty well-known probes across eight hosts returned a real document zero
+  times. No security.txt, no api-catalog, no OIDC/OAuth discovery, no ai-plugin.json, and no A2A
+  agent card anywhere on hpinc.com, helmerichpayne.com or magvar.com. This file records a measured
+  absence, which is valid data — it is NOT a presence.
+pointer_basis: >-
+  NO `WellKnown` pointer and NO `SecurityTxt` pointer are emitted in apis.yml. Every path either
+  404d or answered 200 with an HTML application shell. Per the pipeline contract, the pointer
+  asserts that the PROVIDER serves the surface, and H&P serves none of it.
+false_positive_watch: >-
+  TWO hosts are SPA catch-alls that answer HTTP 200 with an HTML app shell for EVERY /.well-known/*
+  path, including paths that cannot exist: fac.magvar.com (16,000-byte Angular shell, title "MagVAR -
+  Dynamic Quality Control Calculator for Wellbore Surveys") and saphira.magvar.com (5,623-byte shell,
+  title "Saphira"). api.magvar.com resolves to the same Saphira shell. Those 200s are recorded below
+  as MISSES. Any future round that reads one of them as a served document is wrong.
+hosts:
+  - host: https://www.hpinc.com
+    note: Registrable domain and primary corporate site (WordPress behind WP Engine).
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/openid-configuration
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/api-catalog
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/agent-card.json
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/agent.json
+        status: 404
+        checked: '2026-09-13'
+  - host: https://hpinc.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/api-catalog
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/agent-card.json
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/agent.json
+        status: 404
+        checked: '2026-09-13'
+  - host: https://www.helmerichpayne.com
+    note: Legacy corporate domain; 301s to www.hpinc.com.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/api-catalog
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/agent-card.json
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/agent.json
+        status: 404
+        checked: '2026-09-13'
+  - host: https://fac-api.magvar.com
+    note: >-
+      The API host for the MagVAR Survey Validation API. Spring Boot; returns a JSON 404 envelope
+      for every unmapped path, so these are genuine confirmed absences, not a WAF refusal.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/openid-configuration
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/api-catalog
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/agent-card.json
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/agent.json
+        status: 404
+        checked: '2026-09-13'
+  - host: https://www.magvar.com
+    note: >-
+      MagVAR's own domain, now serving H&P content. Apache mod_security answers 403 for every
+      /.well-known/* path, so these are "unreachable", not "confirmed absent".
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+        checked: '2026-09-13'
+      - path: /.well-known/api-catalog
+        status: 403
+        checked: '2026-09-13'
+      - path: /.well-known/agent-card.json
+        status: 403
+        checked: '2026-09-13'
+      - path: /.well-known/agent.json
+        status: 403
+        checked: '2026-09-13'
+  - host: https://fac.magvar.com
+    note: >-
+      MISS, not hit. Angular SPA catch-all: every path below answered 200 with the identical
+      16,000-byte HTML shell. No document was served.
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        body: HTML SPA shell (16,000 bytes) — not a document
+        checked: '2026-09-13'
+      - path: /.well-known/api-catalog
+        status: 200
+        body: HTML SPA shell (16,000 bytes) — not a document
+        checked: '2026-09-13'
+      - path: /.well-known/agent-card.json
+        status: 200
+        body: HTML SPA shell (16,000 bytes) — not a JSON AgentCard
+        checked: '2026-09-13'
+      - path: /.well-known/agent.json
+        status: 200
+        body: HTML SPA shell (16,000 bytes) — not a JSON AgentCard
+        checked: '2026-09-13'
+  - host: https://saphira.magvar.com
+    note: >-
+      MISS, not hit. Saphira survey-management SPA catch-all; identical 5,623-byte HTML shell for
+      every path. api.magvar.com resolves to this same application.
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        body: HTML SPA shell (5,623 bytes) — not a document
+        checked: '2026-09-13'
+      - path: /.well-known/api-catalog
+        status: 200
+        body: HTML SPA shell (5,623 bytes) — not a document
+        checked: '2026-09-13'
+      - path: /.well-known/agent-card.json
+        status: 200
+        body: HTML SPA shell (5,623 bytes) — not a JSON AgentCard
+        checked: '2026-09-13'
+      - path: /.well-known/agent.json
+        status: 200
+        body: HTML SPA shell (5,623 bytes) — not a JSON AgentCard
+        checked: '2026-09-13'
+  - host: https://tools.magvar.com
+    note: Static file host for the MagVAR calculators and PDFs.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/api-catalog
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/agent-card.json
+        status: 404
+        checked: '2026-09-13'
+      - path: /.well-known/agent.json
+        status: 404
+        checked: '2026-09-13'
+llms_txt:
+  found: true
+  url: https://www.hpinc.com/llms.txt
+  status: 200
+  file: ../llms/helmerich-and-payne-llms.txt
+  note: >-
+    Not a /.well-known/ path, probed in the same sweep. www.hpinc.com serves a real 4,320-byte
+    text/plain llms.txt (generated by Yoast SEO v28.1). It is a marketing-site index — pages, posts,
+    technologies, news and resource taxonomies — and names NO API, so it does not help an agent
+    reach the MagVAR Survey Validation API.

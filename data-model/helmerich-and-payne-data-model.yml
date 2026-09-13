@@ -1,0 +1,75 @@
+generated: '2026-09-13'
+method: derived
+source: openapi/helmerich-and-payne-magvar-survey-validation.json (definitions + $ref graph)
+summary: >-
+  Six schemas, one root, no identifiers and no persistence. The MagVAR Survey Validation API has no
+  resources in the REST sense — nothing is created, addressed by id, or retrieved later. The "data
+  model" is the shape of a single calculation result, so there are no belongs_to/has_many relations
+  between stored entities, only composition inside one response document.
+persistence: none
+identifier_scheme: none
+identifier_note: >-
+  No entity in this contract carries an id, uuid, href or prefixed key. A survey is submitted as
+  query parameters and answered in the same request; nothing is addressable afterwards.
+entities:
+  - name: SurveyValidation
+    role: root
+    description: Survey Validation Info — the complete answer to one MWD survey QC query.
+    required: [azimuthUncertainty, dip, gravitationalFieldStrength, inclinationUncertainty, magneticFieldStrength, sigmaValidation]
+  - name: Sigma results
+    description: Anti-collision sigma distance and whether it falls within the caller's tolerance.
+    fields: [distance (double), withinTolerance (boolean)]
+  - name: Validation results
+    description: >-
+      A traffic-light QC verdict for one measured field against its reference, with the two
+      thresholds that produced it.
+    fields: [validationResult (Green|Orange|Red), greenThreshold (double), orangeThreshold (double)]
+  - name: Uncertainty results
+    description: Random and systematic uncertainty components for one angular quantity.
+    fields: [random (double), systematic (double)]
+  - name: ValidationErrors
+    role: error envelope
+    fields: [validationErrors (array of ValidationError)]
+  - name: ValidationError
+    role: error item
+    fields: [field (string), message (string), value (any)]
+relationships:
+  - from: SurveyValidation
+    to: Sigma results
+    type: has_one
+    via: sigmaValidation
+  - from: SurveyValidation
+    to: Validation results
+    type: has_one
+    via: magneticFieldStrength
+  - from: SurveyValidation
+    to: Validation results
+    type: has_one
+    via: dip
+  - from: SurveyValidation
+    to: Validation results
+    type: has_one
+    via: gravitationalFieldStrength
+  - from: SurveyValidation
+    to: Uncertainty results
+    type: has_one
+    via: inclinationUncertainty
+  - from: SurveyValidation
+    to: Uncertainty results
+    type: has_one
+    via: azimuthUncertainty
+  - from: ValidationErrors
+    to: ValidationError
+    type: has_many
+    via: validationErrors
+reuse:
+  note: >-
+    `Validation results` is referenced three times and `Uncertainty results` twice, so the contract
+    does reuse components rather than inlining repeated shapes — good hygiene for a six-schema spec.
+input_model:
+  note: >-
+    The request has no body. Nineteen required query parameters carry the whole input: a location
+    (latitude, longitude, depthBelowMSL + depthUnits), a wellbore orientation (wellboreInclination,
+    wellboreAzimuth), a measured triple (measuredBTotal, measuredDip, measuredGTotal), a reference
+    triple (referenceBTotal, referenceDip, referenceGTotal, referenceDeclination), a survey date,
+    an anti-collision sigma, three unit enums, a gravity model and an ISCWSA tool code.

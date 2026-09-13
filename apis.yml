@@ -1,38 +1,180 @@
 name: Helmerich And Payne
 aid: helmerich-and-payne
+description: >-
+  Helmerich & Payne, Inc. (H&P, NYSE: HP) is a Tulsa-based drilling solutions company that operates
+  one of the largest land rig fleets in the United States alongside international and offshore
+  operations, and sells rig automation and wellbore-placement technology under the H&P Technologies
+  banner — FlexRig, AutoSlide, StallAssist, FlexB2D and Autodriller Pro. Its public API surface is
+  narrow but real: through Magnetic Variation Services LLC (MagVAR), the directional-drilling
+  survey-correction company H&P acquired in 2018, it publishes the MagVAR Survey Validation API, an
+  anonymous, read-only HTTPS endpoint that runs ISCWSA OWSG Rev-2 dynamic quality control on MWD
+  survey stations and returns per-field Green/Orange/Red verdicts with inclination and azimuth
+  uncertainty. H&P links the API from its own customer-tools page and documents it with a Swagger
+  2.0 contract served at the API host.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/helmerich-and-payne.png
+url: https://raw.githubusercontent.com/api-evangelist/helmerich-and-payne/refs/heads/main/apis.yml
+created: '2026-04-28'
+modified: '2026-09-13'
+specificationVersion: '0.23'
+position: Producing
+tags:
+  - Oil and Gas
+  - Drilling
+  - Energy
+  - Wellbore Placement
+  - Directional Drilling
+  - Survey Management
+  - Geomagnetics
+  - Rig Automation
+  - Industrial
+tags_raw:
+  - oil-and-gas
+  - drilling
+  - energy
+  - wellbore-placement
+  - directional-drilling
+  - survey-management
+  - geomagnetics
+  - rig-automation
+  - industrial
+maintainers:
+  - FN: API Evangelist
+    email: info@apievangelist.com
+    url: https://apievangelist.com
 deliveryModel:
   model: unknown
   open_source: false
-  commercial: false
-  callable_host: false
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  commercial: true
+  callable_host: true
+  label: >-
+    Commercial, licensed under the Survey Validation API EULA; the endpoint itself is a callable
+    anonymous host with no published price.
+  confidence: medium
   source:
-  - none
-  generated: '2026-08-28'
-  method: derived
-specificationVersion: '0.23'
+    - https://www.magvar.com/EULA_SurveyValidationAPI.html
+    - https://fac-api.magvar.com/v2/api-docs
+  generated: '2026-09-13'
+  method: searched
 accessModel:
-  pricing: unknown
-  onboarding: unknown
+  pricing: unpublished
+  onboarding: none
   trial: false
-  try_now: false
-  public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/helmerich-and-payne.png
-url: 
-  https://raw.githubusercontent.com/api-evangelist/helmerich-and-payne/refs/heads/main/apis.yml
-modified: '2026-04-28'
-apis: []
+  try_now: true
+  public: true
+  label: >-
+    Publicly callable with no credential and no signup; commercial terms are set by a EULA rather
+    than by a published plan.
+  confidence: medium
+  source:
+    - https://fac-api.magvar.com/swagger-ui.html
+    - https://www.magvar.com/EULA_SurveyValidationAPI.html
+  generated: '2026-09-13'
+  method: probed
+apis:
+  - name: MagVAR Survey Validation API
+    description: >-
+      A single-operation, anonymous, read-only calculation API that implements dynamic quality
+      control for the ISCWSA OWSG Rev-2 error model tool codes. Callers submit one MWD survey
+      station — WGS84 location, depth, wellbore inclination and azimuth, measured and reference
+      Btotal/dip/Gtotal, survey date, gravity model and an ISCWSA tool code, each with an explicit
+      units enum — and receive a Green/Orange/Red validation verdict per measured field with the
+      thresholds that produced it, an anti-collision sigma distance with a pass/fail flag, and the
+      random and systematic components of inclination and azimuth uncertainty. Published by
+      Magnetic Variation Services LLC, a wholly owned H&P subsidiary, and linked from H&P's own
+      customer-tools page.
+    humanURL: https://fac-api.magvar.com/swagger-ui.html
+    baseURL: https://fac-api.magvar.com
+    tags:
+      - Survey Management
+      - Wellbore Placement
+      - Directional Drilling
+      - Geomagnetics
+      - Quality Control
+      - Oil and Gas
+    tags_raw:
+      - survey-management
+      - wellbore-placement
+      - directional-drilling
+      - geomagnetics
+      - quality-control
+      - oil-and-gas
+    properties:
+      - type: OpenAPI
+        url: openapi/helmerich-and-payne-magvar-survey-validation.json
+      - type: Documentation
+        url: https://fac-api.magvar.com/swagger-ui.html
+      - type: APIReference
+        url: https://fac-api.magvar.com/swagger-ui.html
+      - type: Authentication
+        url: authentication/helmerich-and-payne-authentication.yml
+      - type: Conventions
+        url: conventions/helmerich-and-payne-conventions.yml
+      - type: ErrorCatalog
+        url: errors/helmerich-and-payne-problem-types.yml
+      - type: DataModel
+        url: data-model/helmerich-and-payne-data-model.yml
+      - type: Overlay
+        url: overlays/helmerich-and-payne-magvar-survey-validation-overlay.yaml
+      - type: Sandbox
+        url: sandbox/helmerich-and-payne-sandbox.yml
+      - type: RateLimits
+        url: rate-limits/helmerich-and-payne-rate-limits.yml
+      - type: TermsOfService
+        url: https://www.magvar.com/EULA_SurveyValidationAPI.html
+      - type: Support
+        url: https://www.magvar.com/contact
+      - type: X-MCPServerCandidate
+        url: mcp/helmerich-and-payne-mcp.yml
 common:
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/helmerich-payne
+  - type: DomainSecurity
+    url: security/helmerich-and-payne-domain-security.yml
   - type: Website
-    url: https://www.helmerich-and-payne.com
-description: >-
-  Helmerich & Payne is a contract drilling company providing drilling services for
-  oil and gas exploration and production companies, primarily in the United States.
+    url: https://www.hpinc.com
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/helmerich-&-payne/
+  - type: GitHubOrganization
+    url: https://github.com/helmerichpayne
+  - type: Documentation
+    url: https://www.hpinc.com/resources/customer-tools
+  - type: APIReference
+    url: https://fac-api.magvar.com/swagger-ui.html
+  - type: Support
+    url: https://www.magvar.com/contact
+  - type: Blog
+    url: https://www.hpinc.com/news
+  - type: PrivacyPolicy
+    url: https://www.hpinc.com/privacy-notices-settings-and-policies
+  - type: TermsOfService
+    url: https://www.magvar.com/EULA_SurveyValidationAPI.html
+  - type: Login
+    url: https://www.hpinc.com/customer-login
+  - type: LLMsTxt
+    url: llms/helmerich-and-payne-llms.txt
+  - type: Authentication
+    url: authentication/helmerich-and-payne-authentication.yml
+  - type: Conventions
+    url: conventions/helmerich-and-payne-conventions.yml
+  - type: Conformance
+    url: conformance/helmerich-and-payne-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/helmerich-and-payne-lifecycle.yml
+  - type: Sandbox
+    url: sandbox/helmerich-and-payne-sandbox.yml
+  - type: RateLimits
+    url: rate-limits/helmerich-and-payne-rate-limits.yml
+  - type: Plans
+    url: plans/helmerich-and-payne-plans-pricing.yml
+  - type: DataModel
+    url: data-model/helmerich-and-payne-data-model.yml
+  - type: ErrorCatalog
+    url: errors/helmerich-and-payne-problem-types.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: AgenticAccess
+    url: agentic-access/helmerich-and-payne-agentic-access.yml
+
+x-enrichment:
+  date: '2026-09-13'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v3
