@@ -71,61 +71,41 @@ accessModel:
   generated: '2026-09-13'
   method: probed
 apis:
-  - name: MagVAR Survey Validation API
-    description: >-
-      A single-operation, anonymous, read-only calculation API that implements dynamic quality
-      control for the ISCWSA OWSG Rev-2 error model tool codes. Callers submit one MWD survey
-      station — WGS84 location, depth, wellbore inclination and azimuth, measured and reference
-      Btotal/dip/Gtotal, survey date, gravity model and an ISCWSA tool code, each with an explicit
-      units enum — and receive a Green/Orange/Red validation verdict per measured field with the
-      thresholds that produced it, an anti-collision sigma distance with a pass/fail flag, and the
-      random and systematic components of inclination and azimuth uncertainty. Published by
-      Magnetic Variation Services LLC, a wholly owned H&P subsidiary, and linked from H&P's own
-      customer-tools page.
-    humanURL: https://fac-api.magvar.com/swagger-ui.html
-    baseURL: https://fac-api.magvar.com
-    tags:
-      - Survey Management
-      - Wellbore Placement
-      - Directional Drilling
-      - Geomagnetics
-      - Quality Control
-      - Oil and Gas
-    tags_raw:
-      - survey-management
-      - wellbore-placement
-      - directional-drilling
-      - geomagnetics
-      - quality-control
-      - oil-and-gas
-    properties:
-      - type: OpenAPI
-        url: openapi/helmerich-and-payne-magvar-survey-validation.json
-      - type: Documentation
-        url: https://fac-api.magvar.com/swagger-ui.html
-      - type: APIReference
-        url: https://fac-api.magvar.com/swagger-ui.html
-      - type: Authentication
-        url: authentication/helmerich-and-payne-authentication.yml
-      - type: Conventions
-        url: conventions/helmerich-and-payne-conventions.yml
-      - type: ErrorCatalog
-        url: errors/helmerich-and-payne-problem-types.yml
-      - type: DataModel
-        url: data-model/helmerich-and-payne-data-model.yml
-      - type: Overlay
-        url: overlays/helmerich-and-payne-magvar-survey-validation-overlay.yaml
-      - type: Sandbox
-        url: sandbox/helmerich-and-payne-sandbox.yml
-      - type: RateLimits
-        url: rate-limits/helmerich-and-payne-rate-limits.yml
-      - type: TermsOfService
-        url: https://www.magvar.com/EULA_SurveyValidationAPI.html
-      - type: Support
-        url: https://www.magvar.com/contact
-      - type: X-MCPServerCandidate
-        url: mcp/helmerich-and-payne-mcp.yml
+- aid: helmerich-and-payne:helmerich-and-payne-survey-validation-controller-api
+  name: Helmerich And Payne Survey Validation Controller API
+  description: Survey Validation and QC
+  humanURL: https://fac-api.magvar.com/swagger-ui.html
+  baseURL: https://fac-api.magvar.com
+  tags:
+  - survey-validation-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/helmerich-and-payne-survey-validation-controller-api-openapi.yml
+  - type: Documentation
+    url: https://fac-api.magvar.com/swagger-ui.html
+  - type: APIReference
+    url: https://fac-api.magvar.com/swagger-ui.html
+  - type: Authentication
+    url: authentication/helmerich-and-payne-authentication.yml
+  - type: Conventions
+    url: conventions/helmerich-and-payne-conventions.yml
+  - type: ErrorCatalog
+    url: errors/helmerich-and-payne-problem-types.yml
+  - type: DataModel
+    url: data-model/helmerich-and-payne-data-model.yml
+  - type: Sandbox
+    url: sandbox/helmerich-and-payne-sandbox.yml
+  - type: RateLimits
+    url: rate-limits/helmerich-and-payne-rate-limits.yml
+  - type: TermsOfService
+    url: https://www.magvar.com/EULA_SurveyValidationAPI.html
+  - type: Support
+    url: https://www.magvar.com/contact
+  - type: X-MCPServerCandidate
+    url: mcp/helmerich-and-payne-mcp.yml
 common:
+  - type: Overlay
+    url: overlays/helmerich-and-payne-magvar-survey-validation-overlay.yaml
   - type: DomainSecurity
     url: security/helmerich-and-payne-domain-security.yml
   - type: Website
