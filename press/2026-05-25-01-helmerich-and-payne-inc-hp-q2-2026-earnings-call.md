@@ -1,7 +1,9 @@
 ---
 title: Helmerich & Payne, Inc. (HP) Q2 2026 Earnings Call ...
 url: https://seekingalpha.com/article/4901915-helmerich-and-payne-inc-hp-q2-2026-earnings-call-transcript
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Helmerich & Payne" press release artificial intelligence'
 position: 1
 source: serpapi-google

@@ -1,7 +1,9 @@
 ---
 title: Very proud to share this story from our customer Helmerich ...
 url: https://www.linkedin.com/posts/botanosman_very-proud-to-share-this-story-from-our-customer-activity-7391856907306803200-2Kzu
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Helmerich & Payne" press release artificial intelligence'
 position: 3
 source: serpapi-google

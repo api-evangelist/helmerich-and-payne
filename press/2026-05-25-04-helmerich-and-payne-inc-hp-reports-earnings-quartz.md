@@ -1,7 +1,9 @@
 ---
 title: Helmerich & Payne Inc. (HP) reports earnings - Quartz
 url: https://qz.com/helmerich-payne-inc-hp-reports-earnings-1851756433
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Helmerich & Payne" press release artificial intelligence'
 position: 4
 source: serpapi-google

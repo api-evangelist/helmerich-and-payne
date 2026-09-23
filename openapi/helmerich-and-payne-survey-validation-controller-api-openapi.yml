@@ -1,0 +1,361 @@
+openapi: 3.2.0
+info:
+  description: This web API implements dynamic quality control for the ISCWSA OWSG Rev-2 error model tool codes.
+  title: MagVAR Survey Validation Survey Validation Controller API
+  contact:
+    name: Magnetic Variation Services LLC
+    url: https://www.magvar.com
+    email: support@magvar.com
+  license:
+    name: End User License Agreement (EULA)
+    url: https://www.magvar.com/EULA_SurveyValidationAPI.html
+servers:
+- url: https://fac-api.magvar.com/
+tags:
+- name: survey-validation-controller
+  description: Survey Validation and QC
+paths:
+  /uncertaintyValues:
+    get:
+      tags:
+      - survey-validation-controller
+      summary: Obtain survey validation info
+      operationId: uncertaintyValuesUsingGET
+      parameters:
+      - name: antiCollisionSigma
+        in: query
+        description: Sigma used for Anti-collision
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 2.0
+      - name: bTotalUnits
+        in: query
+        description: Btotal Units
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: string
+          enum:
+          - NANOTESLA
+          - MICROTESLA
+          - MILLITESLA
+          - TESLA
+          - GAUSS
+          - GAMMA
+          default: NANOTESLA
+      - name: depthBelowMSL
+        in: query
+        description: 'Depth below MSL (negative values for above MSL).<br/>Range: -20000 to 60000'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: -200.0
+      - name: depthUnits
+        in: query
+        description: Depth Units
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: string
+          enum:
+          - METER
+          - KILOMETER
+          - FOOT
+          - FOOT_US
+          - YARD
+          - MILE
+          - SE_FT
+          default: METER
+      - name: gTotalUnits
+        in: query
+        description: Gravity Units
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: string
+          enum:
+          - M_PER_SEC_SQ
+          - FT_PER_SEC_SQ
+          - G
+          - MILLI_G
+          - G_98
+          - GAL
+          - MILLI_GAL
+          default: M_PER_SEC_SQ
+      - name: gravityModel
+        in: query
+        description: Reference Gravity Model
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: string
+          enum:
+          - OLD_STYLE
+          - STANDARD_TOTALG
+          - GARM_TOTALG
+          default: GARM_TOTALG
+      - name: latitude
+        in: query
+        description: 'WGS84 Latitude<br/>Range: -90 to 90'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 29.4217
+      - name: longitude
+        in: query
+        description: 'WGS84 Longitude<br/>Range: -180 to 360'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: -98.4838
+      - name: measuredBTotal
+        in: query
+        description: 'Measured Btotal<br/>Range: 0 to 80000'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 46475.6
+      - name: measuredDip
+        in: query
+        description: 'Measured Dip<br/>Range: -90 to 90'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 57.96
+      - name: measuredGTotal
+        in: query
+        description: 'Measured Gtotal<br/>Range: 0 to 2000000'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 9.803
+      - name: referenceBTotal
+        in: query
+        description: 'Reference Btotal<br/>Range: 0 to 80000'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 46644.9
+      - name: referenceDeclination
+        in: query
+        description: 'Reference Declination<br/>Range: -180 to 360'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 4.24
+      - name: referenceDip
+        in: query
+        description: 'Reference Dip<br/>Range: -90 to 90'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 58.04
+      - name: referenceGTotal
+        in: query
+        description: 'Reference Gtotal<br/>Range: 0 to 2000000'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 9.8
+      - name: surveyDate
+        in: query
+        description: Survey date
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: string
+          format: date-time
+          default: 2017-10-12T11:00:00.000-0600
+      - name: toolCode
+        in: query
+        description: Tool code chosen from the ISCWSA Rev2 standard and extended sets
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: string
+          enum:
+          - MWD
+          - MWD_AX
+          - MWD_AX_SAG
+          - MWD_HRGM
+          - MWD_HRGM_AX
+          - MWD_HRGM_AX_SAG
+          - MWD_HRGM_SAG
+          - MWD_HRGM_SAG_MS
+          - MWD_IFR1
+          - MWD_IFR1_AX
+          - MWD_IFR1_AX_SAG
+          - MWD_IFR1_MS
+          - MWD_IFR1_SAG
+          - MWD_IFR1_SAG_MS
+          - MWD_IFR2_AX_SAG
+          - MWD_IFR2_SAG
+          - MWD_IFR2_SAG_MS
+          - MWD_IGRF
+          - MWD_IGRF_AX
+          - MWD_IGRF_AX_SAG
+          - MWD_IGRF_SAG
+          - MWD_SAG
+          default: MWD
+      - name: wellboreAzimuth
+        in: query
+        description: 'Wellbore True Azimuth<br/>Range: -180 to 360'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 45.0
+      - name: wellboreInclination
+        in: query
+        description: 'Wellbore Inclination<br/>Range: 0 to 180'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 45.0
+      responses:
+        '200':
+          description: Successfully retrieved survey validation info
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SurveyValidation'
+        '400':
+          description: Unexpected or invalid data in request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ValidationErrors'
+        '500':
+          description: Internal server error
+      deprecated: false
+components:
+  schemas:
+    Uncertainty_results:
+      type: object
+      required:
+      - random
+      - systematic
+      properties:
+        random:
+          type: number
+          format: double
+          description: Random uncertainty
+        systematic:
+          type: number
+          format: double
+          description: Systematic uncertainty
+      title: Uncertainty results
+    SurveyValidation:
+      type: object
+      required:
+      - azimuthUncertainty
+      - dip
+      - gravitationalFieldStrength
+      - inclinationUncertainty
+      - magneticFieldStrength
+      - sigmaValidation
+      properties:
+        azimuthUncertainty:
+          description: Azimuth uncertainty
+          $ref: '#/components/schemas/Uncertainty_results'
+        dip:
+          description: Dip validation result
+          $ref: '#/components/schemas/Validation_results'
+        gravitationalFieldStrength:
+          description: Gtotal validation result
+          $ref: '#/components/schemas/Validation_results'
+        inclinationUncertainty:
+          description: Inclination uncertainty
+          $ref: '#/components/schemas/Uncertainty_results'
+        magneticFieldStrength:
+          description: Btotal validation result
+          $ref: '#/components/schemas/Validation_results'
+        sigmaValidation:
+          description: Sigma validation result
+          $ref: '#/components/schemas/Sigma_results'
+      title: SurveyValidation
+      description: Survey Validation Info
+    ValidationError:
+      type: object
+      properties:
+        field:
+          type: string
+          example: latitude
+        message:
+          type: string
+          example: Must be between -90 and 90 degrees
+        value:
+          type: object
+          example: 99999
+      title: ValidationError
+    Validation_results:
+      type: object
+      required:
+      - greenThreshold
+      - orangeThreshold
+      - validationResult
+      properties:
+        greenThreshold:
+          type: number
+          format: double
+          description: Green threshold
+        orangeThreshold:
+          type: number
+          format: double
+          description: Orange threshold
+        validationResult:
+          type: string
+          description: Validation result
+          enum:
+          - Green
+          - Orange
+          - Red
+      title: Validation results
+    ValidationErrors:
+      type: object
+      properties:
+        validationErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      title: ValidationErrors
+    Sigma_results:
+      type: object
+      required:
+      - distance
+      - withinTolerance
+      properties:
+        distance:
+          type: number
+          format: double
+          description: Calculated sigmaValidation distance
+        withinTolerance:
+          type: boolean
+          description: Whether or not the calculated sigmaValidation is within anti-collision sigmaValidation
+      title: Sigma results

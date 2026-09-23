@@ -1,0 +1,24 @@
+{
+  "provider": "helmerich-and-payne",
+  "sources": [
+    "_original/helmerich-and-payne-magvar-survey-validation-swagger.json"
+  ],
+  "outputs": [
+    "helmerich-and-payne-survey-validation-controller-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [
+    "helmerich-and-payne-magvar-survey-validation-swagger.json: info.version missing"
+  ],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "helmerich-and-payne-magvar-survey-validation-swagger.json: upgraded swagger 2.0 -> OpenAPI 3.2.0; renamed 3 component key(s) illegal in 3.x (e.g. Sigma results)",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/helmerich-and-payne-magvar-survey-validation.json: archived document superseded by a larger archived document",
+    "helmerich-and-payne-survey-validation-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
