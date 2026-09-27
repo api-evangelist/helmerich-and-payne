@@ -1,4 +1,4 @@
-name: Helmerich And Payne
+name: Helmerich & Payne
 aid: helmerich-and-payne
 description: >-
   Helmerich & Payne, Inc. (H&P, NYSE: HP) is a Tulsa-based drilling solutions company that operates
@@ -72,7 +72,7 @@ accessModel:
   method: probed
 apis:
 - aid: helmerich-and-payne:helmerich-and-payne-survey-validation-controller-api
-  name: Helmerich And Payne Survey Validation Controller API
+  name: Helmerich & Payne Survey Validation Controller API
   description: Survey Validation and QC
   humanURL: https://fac-api.magvar.com/swagger-ui.html
   baseURL: https://fac-api.magvar.com

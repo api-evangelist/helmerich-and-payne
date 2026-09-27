@@ -271,36 +271,6 @@ components:
           format: double
           description: Systematic uncertainty
       title: Uncertainty results
-    SurveyValidation:
-      type: object
-      required:
-      - azimuthUncertainty
-      - dip
-      - gravitationalFieldStrength
-      - inclinationUncertainty
-      - magneticFieldStrength
-      - sigmaValidation
-      properties:
-        azimuthUncertainty:
-          description: Azimuth uncertainty
-          $ref: '#/components/schemas/Uncertainty_results'
-        dip:
-          description: Dip validation result
-          $ref: '#/components/schemas/Validation_results'
-        gravitationalFieldStrength:
-          description: Gtotal validation result
-          $ref: '#/components/schemas/Validation_results'
-        inclinationUncertainty:
-          description: Inclination uncertainty
-          $ref: '#/components/schemas/Uncertainty_results'
-        magneticFieldStrength:
-          description: Btotal validation result
-          $ref: '#/components/schemas/Validation_results'
-        sigmaValidation:
-          description: Sigma validation result
-          $ref: '#/components/schemas/Sigma_results'
-      title: SurveyValidation
-      description: Survey Validation Info
     ValidationError:
       type: object
       properties:
@@ -337,14 +307,6 @@ components:
           - Orange
           - Red
       title: Validation results
-    ValidationErrors:
-      type: object
-      properties:
-        validationErrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-      title: ValidationErrors
     Sigma_results:
       type: object
       required:
@@ -359,3 +321,41 @@ components:
           type: boolean
           description: Whether or not the calculated sigmaValidation is within anti-collision sigmaValidation
       title: Sigma results
+    ValidationErrors:
+      type: object
+      properties:
+        validationErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      title: ValidationErrors
+    SurveyValidation:
+      type: object
+      required:
+      - azimuthUncertainty
+      - dip
+      - gravitationalFieldStrength
+      - inclinationUncertainty
+      - magneticFieldStrength
+      - sigmaValidation
+      properties:
+        azimuthUncertainty:
+          description: Azimuth uncertainty
+          $ref: '#/components/schemas/Uncertainty_results'
+        dip:
+          description: Dip validation result
+          $ref: '#/components/schemas/Validation_results'
+        gravitationalFieldStrength:
+          description: Gtotal validation result
+          $ref: '#/components/schemas/Validation_results'
+        inclinationUncertainty:
+          description: Inclination uncertainty
+          $ref: '#/components/schemas/Uncertainty_results'
+        magneticFieldStrength:
+          description: Btotal validation result
+          $ref: '#/components/schemas/Validation_results'
+        sigmaValidation:
+          description: Sigma validation result
+          $ref: '#/components/schemas/Sigma_results'
+      title: SurveyValidation
+      description: Survey Validation Info
