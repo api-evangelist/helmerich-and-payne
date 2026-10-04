@@ -256,6 +256,79 @@ paths:
       deprecated: false
 components:
   schemas:
+    Uncertainty_results:
+      type: object
+      required:
+      - random
+      - systematic
+      properties:
+        random:
+          type: number
+          format: double
+          description: Random uncertainty
+        systematic:
+          type: number
+          format: double
+          description: Systematic uncertainty
+      title: Uncertainty results
+    Validation_results:
+      type: object
+      required:
+      - greenThreshold
+      - orangeThreshold
+      - validationResult
+      properties:
+        greenThreshold:
+          type: number
+          format: double
+          description: Green threshold
+        orangeThreshold:
+          type: number
+          format: double
+          description: Orange threshold
+        validationResult:
+          type: string
+          description: Validation result
+          enum:
+          - Green
+          - Orange
+          - Red
+      title: Validation results
+    ValidationError:
+      type: object
+      properties:
+        field:
+          type: string
+          example: latitude
+        message:
+          type: string
+          example: Must be between -90 and 90 degrees
+        value:
+          type: object
+          example: 99999
+      title: ValidationError
+    Sigma_results:
+      type: object
+      required:
+      - distance
+      - withinTolerance
+      properties:
+        distance:
+          type: number
+          format: double
+          description: Calculated sigmaValidation distance
+        withinTolerance:
+          type: boolean
+          description: Whether or not the calculated sigmaValidation is within anti-collision sigmaValidation
+      title: Sigma results
+    ValidationErrors:
+      type: object
+      properties:
+        validationErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      title: ValidationErrors
     SurveyValidation:
       type: object
       required:
@@ -286,76 +359,3 @@ components:
           $ref: '#/components/schemas/Sigma_results'
       title: SurveyValidation
       description: Survey Validation Info
-    Validation_results:
-      type: object
-      required:
-      - greenThreshold
-      - orangeThreshold
-      - validationResult
-      properties:
-        greenThreshold:
-          type: number
-          format: double
-          description: Green threshold
-        orangeThreshold:
-          type: number
-          format: double
-          description: Orange threshold
-        validationResult:
-          type: string
-          description: Validation result
-          enum:
-          - Green
-          - Orange
-          - Red
-      title: Validation results
-    ValidationErrors:
-      type: object
-      properties:
-        validationErrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-      title: ValidationErrors
-    ValidationError:
-      type: object
-      properties:
-        field:
-          type: string
-          example: latitude
-        message:
-          type: string
-          example: Must be between -90 and 90 degrees
-        value:
-          type: object
-          example: 99999
-      title: ValidationError
-    Uncertainty_results:
-      type: object
-      required:
-      - random
-      - systematic
-      properties:
-        random:
-          type: number
-          format: double
-          description: Random uncertainty
-        systematic:
-          type: number
-          format: double
-          description: Systematic uncertainty
-      title: Uncertainty results
-    Sigma_results:
-      type: object
-      required:
-      - distance
-      - withinTolerance
-      properties:
-        distance:
-          type: number
-          format: double
-          description: Calculated sigmaValidation distance
-        withinTolerance:
-          type: boolean
-          description: Whether or not the calculated sigmaValidation is within anti-collision sigmaValidation
-      title: Sigma results
