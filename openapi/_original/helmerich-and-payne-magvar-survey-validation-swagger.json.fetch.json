@@ -1,0 +1,12 @@
+{
+ "url": "https://fac-api.magvar.com/v2/api-docs",
+ "requested_url": "https://fac-api.magvar.com/v2/api-docs",
+ "status": 200,
+ "content_type": "application/json;charset=UTF-8",
+ "bytes": 8019,
+ "sha256": "db7420c7f4e9c0ba92ec09edc143153a27611125d2b6522d230ae69397e2b9dc",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
